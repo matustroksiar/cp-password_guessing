@@ -9,6 +9,13 @@ byte 0x1F; 7
 byte 0x01; 8
 byte 0x19; 9
 
+byte 0x10; A
+byte 0x31; P
+byte 0x49; S
+byte 0xF4; R
+byte 0x7C; U
+byte 0x1F; leftT
+byte 0x8C; rightT
 
 mvi a,0x03 ; resetting displays
 out 00001111b,a
@@ -17,6 +24,47 @@ out 00001111b,a
 mvi a,0 ; initialize current number index in RAM
 mvi b,0
 str a,b ; init in ram
+
+mvi a,2 ; init guesing in ram
+mvi b,0
+str a,b
+
+
+
+
+main:
+	mvi a,2
+	ldr a,a
+	cmi a,0
+	jzr firstEnterPassword
+	cmi a,1
+	jzr startGuessing
+jmp main
+
+firstEnterPassword:
+	mvi a,0
+	ldr a,a
+	cmi a,4
+	jzr firstEnterPasswordEnd
+	
+	mvi b,0 ; reset 
+	str a,b
+jmp enterPassword
+
+firstEnterPasswordEnd:
+	mvi a,2
+	mvi b,1
+	str a,b
+	
+
+startGuessing:
+	mvi a,0
+	ldr a,a
+	cmi a,4
+	jzr compare
+jmp enterPassword
+
+
 
 enterPassword:
 
@@ -121,7 +169,7 @@ displayNumber:
 	mvi b,0 ; index offset in RAM
 	ldr b,b
 	
-	mvi c,3 ; start of user saved number
+	mvi c,10 ; start of user saved number
 	add b,c
 	str b,a
 
@@ -133,22 +181,22 @@ displayNumber:
 	str b,a
 	
 	
-	mvi a,3
+	mvi a,10
 	ldr a,a
 	mmr b,a
 	out 11101111b,b
 	
-	mvi a,4
+	mvi a,11
 	ldr a,a
 	mmr b,a
 	out 11011111b,b
 	
-	mvi a,5
+	mvi a,12
 	ldr a,a
 	mmr b,a
 	out 10111111b,b
 	
-	mvi a,6
+	mvi a,13
 	ldr a,a
 	mmr b,a
 	out 01111111b,b
@@ -181,7 +229,7 @@ waitReleaseRow4:
 	inn A,0111b 
 	ani A,1111b
 	cmi A,1111b
-	jzr enterPassword	
+	jzr main	
 jmp waitReleaseButton	
 
 
