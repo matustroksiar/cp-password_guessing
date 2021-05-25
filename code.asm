@@ -11,10 +11,11 @@ byte 0x19; 9
 byte 0x10; A.
 byte 0x30; P.
 byte 0x48; S.
-byte 0xF4; R
-byte 0x7C; U
+byte 0x60; E
+byte 0xF4; r.
+byte 0x82; U.
 byte 0x1F; leftT
-byte 0x8C; rightT
+byte 0x72; rightT.
 
 mvi a,0x03 ; resetting displays
 out 00001111b,a
@@ -67,10 +68,21 @@ firstEnterPasswordEnd:
 	mvi b,0
 	str a,b
 	
-
-startGuessing:
+	mvi a,11 ; P
+	mmr b,a
+	out 11101111b,b
+	mvi a,15 ; U
+	mmr b,a
+	out 11011111b,b
+	mvi a,16 ; leftT
+	mmr b,a
+	out 10111111b,b
+	mvi a,17 ; rightT.
+	mmr b,a
+	out 01111111b,b
 	
 
+startGuessing:
 	mvi a,0
 	ldr a,a
 	cmi a,4
@@ -79,6 +91,7 @@ jmp enterPassword
 
 
 compare:
+; todo compare and clean
 
 enterPassword:
 
