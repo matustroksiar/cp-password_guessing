@@ -142,6 +142,8 @@ compare:
 	mvi a,14 ; r.r.
 	mmr b,a
 	out 10011111b,b
+	mvi b,1111111b
+	out 01111111b,b
 	
 	
 jmp main
