@@ -63,13 +63,20 @@ firstEnterPasswordEnd:
 	mvi b,1
 	str a,b
 	
+	mvi a,0
+	mvi b,0
+	str a,b
+	
 
 startGuessing:
+	
+
 	mvi a,0
 	ldr a,a
 	cmi a,4
 	jzr compare
 jmp enterPassword
+
 
 compare:
 
@@ -170,6 +177,11 @@ jmp displayNumber
 
 displayNumber:
 
+	mvi a,2
+	ldr a,a
+	cmi a,1
+	jzr displayNumber2
+
 	mvi a,1 ; new number to add
 	ldr a,a
 	
@@ -210,8 +222,45 @@ displayNumber:
 	
 jmp waitReleaseButton
 
+displayNumber2:
+	mvi a,1 ; new number to add
+	ldr a,a
+	
+	mvi b,0 ; index offset in RAM
+	ldr b,b
+	
+	mvi c,16 ; start of user saved number
+	add b,c
+	str b,a
 
-
+	
+	mvi a,0 ; increase index of new num
+	ldr a,a
+	inc a
+	mvi b,0
+	str b,a
+	
+	
+	mvi a,16
+	ldr a,a
+	mmr b,a
+	out 11101111b,b
+	
+	mvi a,17
+	ldr a,a
+	mmr b,a
+	out 11011111b,b
+	
+	mvi a,18
+	ldr a,a
+	mmr b,a
+	out 10111111b,b
+	
+	mvi a,19
+	ldr a,a
+	mmr b,a
+	out 01111111b,b
+jmp waitReleaseButton
 
 
 waitReleaseButton: 
