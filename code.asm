@@ -91,7 +91,81 @@ jmp enterPassword
 
 
 compare:
-; todo compare and clean
+	mvi a,0 ; reset index
+	mvi b,0
+	str a,b
+	
+	mvi c,0
+	
+	mvi a,10
+	mvi b,16
+	ldr a,a
+	ldr b,b
+	cmp a,b
+	jzr match1
+	
+	match1Continue:
+	
+	mvi a,11
+	mvi b,17
+	ldr a,a
+	ldr b,b
+	cmp a,b
+	jzr match2
+	
+	match2Continue:
+	
+	mvi a,12
+	mvi b,18
+	ldr a,a
+	ldr b,b
+	cmp a,b
+	jzr match3
+	
+	match3Continue:
+	
+	mvi a,13
+	mvi b,19
+	ldr a,a
+	ldr b,b
+	cmp a,b
+	jzr match4
+	
+	match4Continue:
+	
+	cmi c,4
+	jzr finish
+	
+	mvi a,13 ; E
+	mmr b,a
+	out 11101111b,b
+	mvi a,14 ; r.r.
+	mmr b,a
+	out 10011111b,b
+	
+	
+jmp main
+	
+	
+match1:
+	inc c
+jmp match1Continue
+
+match2:
+	inc c
+jmp match2Continue
+
+match3:
+	inc c
+jmp match3Continue
+
+match4:
+	inc c
+jmp match4Continue
+
+
+
+
 
 enterPassword:
 
@@ -304,7 +378,7 @@ jmp waitReleaseButton
 
 
 
-
+finish:
 
 
 
