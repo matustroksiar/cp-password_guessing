@@ -8,10 +8,9 @@ byte 0x41; 6
 byte 0x1F; 7
 byte 0x01; 8
 byte 0x19; 9
-
-byte 0x10; A
-byte 0x31; P
-byte 0x49; S
+byte 0x10; A.
+byte 0x30; P.
+byte 0x48; S.
 byte 0xF4; R
 byte 0x7C; U
 byte 0x1F; leftT
@@ -29,7 +28,15 @@ mvi a,2 ; init guesing in ram
 mvi b,0
 str a,b
 
-
+mvi a,11 ; P
+mmr b,a
+out 11101111b,b
+mvi a,10 ; A
+mmr b,a
+out 11011111b,b
+mvi a,12 ; SS
+mmr b,a
+out 00111111b,b
 
 
 main:
@@ -64,7 +71,7 @@ startGuessing:
 	jzr compare
 jmp enterPassword
 
-
+compare:
 
 enterPassword:
 
